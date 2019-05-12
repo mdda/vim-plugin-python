@@ -1,0 +1,14 @@
+
+http://candidtim.github.io/vim/2017/08/11/write-vim-plugin-in-python.html
+
+https://www.thekerneltrip.com/ocaml/vim-ocaml-plugin/
+https://stackoverflow.com/questions/34517213/is-there-any-documentation-for-the-python-module-vim-for-vim-plugin-development
+https://www.tummy.com/presentations/vimpython-20070225/
+
+
+VIM plugins for project management :
+https://github.com/scrooloose/nerdtree/tree/master/lib/nerdtree
+https://github.com/janlay/NERD-tree-project
+
+
+
