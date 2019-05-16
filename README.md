@@ -105,6 +105,18 @@ and thus I have following in my `~/.vimrc`:
 Plugin 'file:///home/candidtim/src/sampleplugin'
 ```
 
+Of course, with `Vim 8.0` and after, there's a built-in package manager, so if you 
+create the necessary directory (here `devel` is just an arbitrary choice), you can symlink from there :
+
+```
+pushd . 
+mkdir -p ~/.vim/pack/devel/start
+cd  ~/.vim/pack/devel/start
+ln -s ~/your-src-directory/yourpluginname .
+popd
+```
+
+
 Now, let’s make sure this actually works. Let’s add following content to `sampleplugin.vim`:
 
 ```
@@ -114,15 +126,15 @@ echo "It worked!"
 And start new Vim instance where we will test the plugin. 
 Upon startup you should see “It worked!” printed out in the terminal. 
 
-If at this point it doesn’t work, try to load the plugin manually. 
-For this, execute following command from Vim: `:source ~/.vim/bundle/sampleplugin/plugin/sampleplugin.vim`. 
-Now, if this finally works, 
-it means that your plugin manager doesn’t load the plugin automatically on Vim startup - 
-refer to your plugin manager documentation to find out how to configure it correctly. 
-If however this doesn't work either - Vim should normally print out an error message, 
-which should give you a better idea. 
-Most likely you need to check that file actually exists and symbolic link works as expected, 
-and that file content (syntax) is correct.
+>   If at this point it doesn't work, try to load the plugin manually. 
+>   For this, execute following command from Vim: `:source ~/.vim/.vim/pack/devel/start/yourpluginname/plugin/yourpluginname.vim`. 
+>   Now, if this finally works, 
+>   it means that your plugin manager doesn’t load the plugin automatically on Vim startup - 
+>   refer to your plugin manager documentation to find out how to configure it correctly. 
+>   If however this doesn't work either - Vim should normally print out an error message, 
+>   which should give you a better idea. 
+>   Most likely you need to check that file actually exists and symbolic link works as expected, 
+>   and that file content (syntax) is correct.
 
 All set! Let’s write some Python!
 
