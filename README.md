@@ -116,15 +116,15 @@ ln -s ~/your-src-directory/yourpluginname .
 popd
 ```
 
-
-Now, let’s make sure this actually works. Let’s add following content to `sampleplugin.vim`:
+Now, let's make sure this actually works. Let’s add following content to `sampleplugin.vim` 
+(this is written in Vim's custom built-in language `VimL`) :
 
 ```
 echo "It worked!"
 ```
 
 And start new Vim instance where we will test the plugin. 
-Upon startup you should see “It worked!” printed out in the terminal. 
+Upon startup you should see "It worked!" printed out in the terminal. 
 
 >   If at this point it doesn't work, try to load the plugin manually. 
 >   For this, execute following command from Vim: `:source ~/.vim/.vim/pack/devel/start/yourpluginname/plugin/yourpluginname.vim`. 
@@ -136,5 +136,35 @@ Upon startup you should see “It worked!” printed out in the terminal.
 >   Most likely you need to check that file actually exists and symbolic link works as expected, 
 >   and that file content (syntax) is correct.
 
-All set! Let’s write some Python!
+All set! Let's write some Python!
+
+
+### Use Python in Vim plugin
+
+As noted above, the idea now is to execute Python code from `VimL`. 
+`VimL` exposes specific syntax for this. 
+
+Let's change our plugin source (in `plugin/yourpluginname.vim`) to the following:
+
+```
+python << EOF
+print "Hello from Vim's Python!"
+EOF
+```
+
+(Re-)start test Vim instance and you should see the new message.
+
+
+### Actually, Python3 ...
+
+So that we can remain sane (and, of course, providing that your locally installed vim supports it),
+let's instead 'boot' vim with Python3 (it seems to load in the first python version mentioned to it, 
+and can't load both python2 and python3 at the same time).  
+My opinionated choice here is Python3 for the plugin template, so put (in `plugin/yourpluginname.vim`) :
+
+```
+python3 << EOF
+print("Hello from Vim's Python3!")
+EOF
+```
 
