@@ -168,3 +168,49 @@ print("Hello from Vim's Python3!")
 EOF
 ```
 
+### Refining the loading process
+
+
+Now, I don’t mind writing few simple commands inline like this, 
+but our actual goal is to make Python code to live in Python source files, 
+and `VimL` code in `.vim` source files. 
+So, let’s actually make Vim "import" our code from Python source files. 
+Change the code to:
+
+```
+let s:plugin_root_dir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+
+python3 << EOF
+import sys
+from os.path import normpath, join
+import vim
+plugin_root_dir = vim.eval('s:plugin_root_dir')
+python_root_dir = normpath(join(plugin_root_dir, '..', 'python'))
+sys.path.insert(0, python_root_dir)
+import plugin
+EOF
+```
+
+Vim doesn’t know where your Python plugin code lives, so if we are to import it, 
+we need to add its root directory to sys.path in the interpreter running inside Vim. 
+For this:
+
+*  We first save plugin’s directory path into a local variable in plugin’s Vim script
+*  then acces its value from within Python script
+*  use it to build the path to the directory where our Python code lives
+*  and finally add it to sys.path
+*  so that we can now import our Python module
+
+To extract value from Vim’s `plugin_root_dir` variable we use the `vim` Python module. 
+This is available inside Vim and provides an interface to the Vim environment. 
+We will revist this in detail later.
+
+Now, we'll actually add this Python code we talk about. 
+Let's add into a file `./python/plugin.py`):
+
+```
+print("Hello from Python source code in plugin.py")
+```
+
+Restart test Vim instance, see the new message, all done!
+
