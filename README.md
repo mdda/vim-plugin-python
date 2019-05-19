@@ -214,3 +214,56 @@ print("Hello from Python source code in plugin.py")
 
 Restart test Vim instance, see the new message, all done!
 
+(This is already done in this template repo).
+
+
+### Declare `vim` commands and implement them in Python
+
+Now, you likely want to add some commands to the Plugin, 
+or it risks to not to be very useful. 
+Let's implement a simple command which would print out the country you are in, based on your IP. 
+
+Add this to your 'plain python file' `./python/plugin.py` :
+
+```
+import urllib, urllib.request
+import json
+
+try:
+  import vim
+except:
+  print("No vim module available outside vim")
+  pass
+
+def _get(url):
+  return urllib.request.urlopen(url, None, 5).read().strip().decode()
+
+def _get_country():
+  try:
+    ip = _get('http://ipinfo.io/ip')
+    json_location_data = _get('http://api.ip2country.info/ip?%s' % ip)
+    location_data = json.loads(json_location_data)
+    return location_data['countryName']
+  except Exception as e:
+    print('Error in sample plugin (%s)' % (e.msg,))
+
+def print_country():
+  print('You seem to be in %s' % (_get_country(),))
+```
+
+Now, the beauty of this implementation is in that it is plain Python code. 
+You can test and debug it outside Vim with whatever tools you typically use. 
+You can write Python unit tests and execute code from Python REPL, for example:
+
+```
+$ cd ~/your-src-directory/yourpluginname/python/
+$ python
+>>> import plugin
+No vim module available outside vim
+>>> plugin.print_country()
+You seem to be in Singapore
+```
+
+
+
+
