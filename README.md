@@ -265,5 +265,17 @@ You seem to be in Singapore
 ```
 
 
+### Calling Python from Vim
 
+Now, if we want to call it from Vim, some `VimL` is necessary again. 
+Let's declare a Vim function which will call our Python function. 
+Add this to the end of `yourpluginname.vim` file:
+
+```
+function! PrintCountry()
+  python3 print_country()
+endfunction
+```
+
+Restart a test Vim instance, and type: `:call PrintCountry()` 
 
