@@ -292,3 +292,71 @@ command! -nargs=0 PrintCountry call PrintCountry()
 Rinse, repeat and type `:PrintCountry` and it still should print the same country. 
 
 
+### Accessing Vim functionality from Python plugin
+
+Our plugin is quite limited so far: it only spits some text to Vim message area, but doesn’t do a lot otherwise. 
+If we want to do more interesting thins - we need to use `vim` module. 
+It provides Python interface to various Vim functinality.
+
+For starters, it can simply evalaute expressions writtern in `VimL`. 
+This is what we previously did to extract a value of a variable declared in `VimL`:
+
+```
+plugin_root_dir = vim.eval('s:plugin_root_dir')
+```
+
+`eval` can evalaute any `VimL` expression and is certinaly not limited to accessing vars. 
+But more often it will be more convenient to use other vim interfaces instead of `eval`.
+
+
+For example, you can access and modify text in current buffer like so:
+
+```
+vim.current.buffer.append('I was added by a Python plugin!')
+```
+
+As an example, let’s implement another command, `InsertCountry`, 
+which would insert the name of the country you are in at current cursor position. 
+Here is the Python code to add:
+
+```
+def insert_country():
+  row, col = vim.current.window.cursor
+  current_line = vim.current.buffer[row-1]
+  new_line = current_line[:col] + _get_country() + current_line[col:]
+  vim.current.buffer[row-1] = new_line
+```
+
+And, same way as before, let’s add the respective `VimL` function and command:
+
+```
+function! InsertCountry()
+  python3 plugin.insert_country()
+endfunction
+
+command! -nargs=0 InsertCountry call InsertCountry()
+```
+
+Try it out in a new Vim instance. Position a cursor somewhere in a buffer and run `:InsertCountry`
+
+
+### Binding function calls to key combinations
+
+You can now even map a key combination for this. For example, run
+
+```
+:map <Leader>c :InsertCountry<CR>
+```
+
+and press `<Leader> c` to run the command 
+(check out [](https://stackoverflow.com/questions/1764263/what-is-the-leader-in-a-vimrc-file) to find out what `<Leader>` means).
+
+Hey, the plugin just got a major upgrade! 
+Our users can add the mapping to `~/.vimrc` and their country name is just two key presses away!
+
+Vim plugins can do a lot more interesting things. 
+What is possible and how to use vim module is well documented in Vim itself. 
+Check out help: `:help python-vim` - this is why I mentioned curiosity as a prerequisite previously.
+
+
+
