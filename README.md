@@ -279,3 +279,16 @@ endfunction
 
 Restart a test Vim instance, and type: `:call PrintCountry()` 
 
+### Calling Python from Vim (streamlined)
+
+It is not very convenient however to use the `:call` syntax. 
+Typically, Vim plugins provide commands instead.  
+Add this line after the function declaration:
+
+```
+command! -nargs=0 PrintCountry call PrintCountry()
+```
+
+Rinse, repeat and type `:PrintCountry` and it still should print the same country. 
+
+
