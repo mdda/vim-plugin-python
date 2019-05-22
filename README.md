@@ -359,4 +359,33 @@ What is possible and how to use vim module is well documented in Vim itself.
 Check out help: `:help python-vim` - this is why I mentioned curiosity as a prerequisite previously.
 
 
+### Configuration
+
+This section is simple, since we already saw everything we need to provide a configuration for our plugin. 
+Typically, users will configure the plugin in their `~/.vimrc` file and that will set some global variables, 
+which we will later access in a plugin and use to adjust its behaviour. 
+Say, we want to configure our plugin to provide either country names, or ISO codes. 
+Add the following to your `~/.vimrc`:
+
+```
+let g:SamplePluginUseCountryCodes = 1
+```
+
+And then, access it in Python code:
+
+```
+vim.eval('g:SamplePluginUseCountryCodes')
+```
+
+Heads up: `eval` will only return a string, list or a dict, 
+depending on type of data used in `VimL`. 
+In this case, it is a string, so normally you would actually use it like so:
+
+```
+use_codes = vim.eval('g:SamplePluginUseCountryCodes').strip() != '0'
+```
+
+You can technically ask users to use ‘true’ and ‘false’ in this case for example, 
+but it is good idea to stick to the behaviour users are already used to with the majority of other plugins, 
+which is using `0` and `1` for this.
 
