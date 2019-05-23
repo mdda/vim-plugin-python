@@ -389,3 +389,37 @@ You can technically ask users to use ‘true’ and ‘false’ in this case for
 but it is good idea to stick to the behaviour users are already used to with the majority of other plugins, 
 which is using `0` and `1` for this.
 
+
+
+### Getting a bit more sophisticated
+
+We are almost done. Let's just finalize our `VimL` wrapper. 
+It makes sense to add two more features to it:
+
+*  ensure that our plugin is only started when Python is actually available in Vim (this prevents Vim from spitting too many errors to the user when Python is not available)
+*  ensure that the plugin is initialized once and only once.
+
+The following does precisely that:
+
+```
+if !has("python3")
+  echo "vim has to be compiled with +python3 to run this"
+  finish
+endif
+
+if exists('g:sample_python_plugin_loaded')
+    finish
+endif
+
+; the rest of plugin VimL code goes here
+
+let g:sample_python_plugin_loaded = 1
+```
+
+Now, for example, if our user does something like `:source ~/.vimrc`, we can be sure that our plugin:
+
+*  won't try to run the initialization code again
+*  won't change `sys.path again`, 
+*  won't import python modules or execute mode-level code. 
+
+
