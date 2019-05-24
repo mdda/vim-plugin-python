@@ -423,3 +423,24 @@ Now, for example, if our user does something like `:source ~/.vimrc`, we can be 
 *  won't import python modules or execute mode-level code. 
 
 
+### Provide documentation
+
+TODO: Describe documentation process
+
+
+### Publish a plugin
+
+TODO: Show how to add this to vim plugin central
+
+
+### That's it!
+
+This repository is its own final source code... 
+
+Certainly check out :help python which contanins a lot of important details.
+
+If you know of other important tricks, or have a good advice - please, leave a comment below. 
+I'm very interested in further improvments of my Vim plugin development workflow and implementation.
+
+Hope it was useful. Have fun with Vim!
+
