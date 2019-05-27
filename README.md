@@ -11,7 +11,7 @@ The following are the contact details of the original author:
 *The text on this page has been fixed-up a little from the original, and the code has been confirmed to work (on my Fedora 30 machine).*
 
 
-### Writing Vim plugin in Python
+### Writing a Vim plugin in Python
 
 There are many ways to create a Vim plugin. 
 
@@ -33,23 +33,25 @@ and look for a line marked `+python` or `+python3`.
 
 ### Principles and minimal template
 
-Vim plugins actually have to be written in VimL and not in Python. 
-Good news is that Vim plugin can execute arbitrary Python scripts from withing `VimL` code. 
-With this knowledge, the basic idea of the plugin is to:
+Vim plugins actually have to be written in `VimL` and not in Python. 
 
-*  create a wrapper script in VimL
+The good news is that Vim plugins can execute arbitrary Python scripts from within `VimL` code. 
+With this in mind, the basic idea of the plugin is to:
+
+*  create a wrapper script in `VimL`
 *  which will declare Vim commands
 *  and import and run Python code
 *  while latter implements those commands
 
-Before going into Python code, let’s prepare the basic project structure, 
+Before going into Python code, let's prepare the basic project structure, 
 development environment, and ensure that our plugin is ready for plugin managers.
 
 
 ### Plugin structure
 
-If we want our plugin to work with Vim plugin managers, like 
-pathogen, Vundle and many others, it needs to follow some basic structure:
+If we want our plugin to work with Vim plugin managers, 
+like `pathogen`, `Vundle` and many others, 
+it needs to follow some basic structure:
 
 ```
 vim-plugin-python/
@@ -60,8 +62,8 @@ vim-plugin-python/
 ```
 
 This is self-explanatory.  *And is how this repo is laid out.*
-
-But, for sanity's sake, it's probably best to rename the files in this template from `vim-plugin-python` to `yourpluginname`.
+But, for sanity's sake, it's probably best to rename the files in this template from `vim-plugin-python` to `yourpluginname` 
+(or whatever, but *be consistent*).
 
 ```
 yourpluginname/
@@ -71,9 +73,9 @@ yourpluginname/
     └── yourpluginname.vim
 ```
 
-
 It is a good idea to provide an integrated documentation for a plugin, 
-and we will address this later on. 
+and we will address this later on (probably). 
+
 If we are to publish the plugin, say, on GitHub, 
 it makes sense to also add two more files:
 
@@ -81,7 +83,7 @@ it makes sense to also add two more files:
 yourpluginname/
 ├── ...
 ├── LICENSE
-└── README
+└── README.md
 ```
 
 Once our project structure is ready, let’s try and install it.
