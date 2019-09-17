@@ -2,11 +2,7 @@
 
 NB: This repo is solely trying to recreate the code built in [this excellent blog post](http://candidtim.github.io/vim/2017/08/11/write-vim-plugin-in-python.html)
 
-The following are the contact details of the original author: 
-
-*  [the original author via email](timcandid-at-gmail.com)
-*  [GitHub](https://github.com/candidtim)
-*  [Twitter](https://twitter.com/candidtim)
+The original author can be contacted via [their GitHub repo](https://github.com/candidtim)
 
 *The text on this page has been fixed-up a little from the original, and the code has been confirmed to work (on my Fedora 30 machine).*
 
