@@ -69,8 +69,8 @@ yourpluginname/
     └── yourpluginname.vim
 ```
 
-It is a good idea to provide an integrated documentation for a plugin, 
-and we will address this later on (probably). 
+It is a good idea to provide a integrated documentation for your plugin, 
+and we will address this later on (maybe). 
 
 If we are to publish the plugin, say, on GitHub, 
 it makes sense to also add two more files:
@@ -87,13 +87,13 @@ Once our project structure is ready, let’s try and install it.
 
 ### Development process and our first Vim command 
 
-Let's configure the development environment at once, 
+Let's configure the development environment as a first step, 
 so that we can test and run the plugin in a Vim instance regularly. 
-How this set-up is made depends largely on the plugin manager you use with Vim.
+How this set-up is done depends largely on the plugin manager you use with Vim.
 
 Some plugin managers require all plugins to be installed under same root directory, 
 which for most users is `~/.vim/bundle`. 
-If you are concerned, and don’t want to change your plugins root directory, 
+If you are concerned, and don't want to change your plugins root directory, 
 you can create a symbolic link from your source code (which is also convenient during development):
 
 ```
@@ -120,14 +120,14 @@ ln -s ~/your-src-directory/yourpluginname .
 popd
 ```
 
-Now, let's make sure this actually works. Let’s add following content to `sampleplugin.vim` 
+Now, let's make sure this actually works : Add following content to `sampleplugin.vim` 
 (this is written in Vim's custom built-in language `VimL`) :
 
 ```
 echo "It worked!"
 ```
 
-And start new Vim instance where we will test the plugin. 
+And start a new Vim instance (in a new terminal window) where we will test the plugin. 
 Upon startup you should see "It worked!" printed out in the terminal. 
 
 >   If at this point it doesn't work, try to load the plugin manually. 
@@ -162,9 +162,9 @@ EOF
 ### Actually, Python3 ...
 
 So that we can remain sane (and, of course, providing that your locally installed vim supports it),
-let's instead 'boot' vim with Python3 (it seems to load in the first python version mentioned to it, 
+let's instead 'boot' Vim with Python3 (it seems to load in the first python version mentioned to it, 
 and can't load both python2 and python3 at the same time).  
-My opinionated choice here is Python3 for the plugin template, so put (in `plugin/yourpluginname.vim`) :
+The opinionated choice made in this repo is to use Python3 for the plugin template, so put (in `plugin/yourpluginname.vim`) :
 
 ```
 python3 << EOF
@@ -175,9 +175,9 @@ EOF
 ### Refining the loading process
 
 
-Now, I don’t mind writing few simple commands inline like this, 
-but our actual goal is to make Python code to live in Python source files, 
-and `VimL` code in `.vim` source files. 
+Now, writing few simple commands inline like this should be fine, 
+however our actual goal is to make a clean plugin system, 
+where Python code that lives in Python source files, and `VimL` code in `.vim` source files. 
 So, let’s actually make Vim "import" our code from Python source files. 
 Change the code to:
 
