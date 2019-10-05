@@ -223,9 +223,10 @@ Restart test Vim instance, see the new message, all done!
 
 ### Declare `vim` commands and implement them in Python
 
-Now, you likely want to add some commands to the Plugin, 
-or it risks to not to be very useful. 
-Let's implement a simple command which would print out the country you are in, based on your IP. 
+Now, let's add some commands to the Plugin.
+
+As an example, let's implement a simple command which would print out the country you are in, 
+based on your local IP. 
 
 Add this to your 'plain python file' `./python/plugin.py` :
 
@@ -256,8 +257,8 @@ def print_country():
 ```
 
 Now, the beauty of this implementation is in that it is plain Python code. 
-You can test and debug it outside Vim with whatever tools you typically use. 
-You can write Python unit tests and execute code from Python REPL, for example:
+It can be tested and debugged outside Vim with whatever tools you typically use. 
+And you can write Python unit tests and execute code from Python REPL:
 
 ```
 $ cd ~/your-src-directory/yourpluginname/python/
@@ -271,8 +272,9 @@ You seem to be in Singapore
 
 ### Calling Python from Vim
 
-Now, if we want to call it from Vim, some `VimL` is necessary again. 
-Let's declare a Vim function which will call our Python function. 
+Now, if we want to call the python commands from Vim, 
+some more `VimL` is necessary. 
+Let's declare a Vim function which will call our Python function : 
 Add this to the end of `yourpluginname.vim` file:
 
 ```
@@ -283,44 +285,47 @@ endfunction
 
 Restart a test Vim instance, and type: `:call PrintCountry()` 
 
+
 ### Calling Python from Vim (streamlined)
 
-It is not very convenient however to use the `:call` syntax. 
+However, it is not very convenient to use the `:call` syntax. 
 Typically, Vim plugins provide commands instead.  
-Add this line after the function declaration:
+To do this, add the following after the function declaration:
 
 ```
 command! -nargs=0 PrintCountry call PrintCountry()
 ```
 
-Rinse, repeat and type `:PrintCountry` and it still should print the same country. 
+Launching Vim again will enable you to type `:PrintCountry` 
+and have it print the same country. 
 
 
 ### Accessing Vim functionality from Python plugin
 
-Our plugin is quite limited so far: it only spits some text to Vim message area, but doesn’t do a lot otherwise. 
-If we want to do more interesting thins - we need to use `vim` module. 
-It provides Python interface to various Vim functinality.
+The plugin (as presented above) is quite limited so far: 
+it only spits some text to Vim message area, but doesn’t do a lot otherwise. 
+If we want to do more interesting thins - we need to import the `vim` module, 
+which provides a Python interface to a lot of Vim functinality.
 
-For starters, it can simply evalaute expressions writtern in `VimL`. 
-This is what we previously did to extract a value of a variable declared in `VimL`:
+For a start, the `vim` module can simply evaluate expressions writtern in `VimL` 
+(This is what we previously did to extract a value of a variable declared in `VimL`) :
 
 ```
 plugin_root_dir = vim.eval('s:plugin_root_dir')
 ```
 
-`eval` can evalaute any `VimL` expression and is certinaly not limited to accessing vars. 
-But more often it will be more convenient to use other vim interfaces instead of `eval`.
+The `eval` function can evalaute any `VimL` expression and is certainly 
+not limited to accessing `VimL` variables. 
+However, it is often more convenient to use other interfaces within the `vim` module instead of `eval`.
 
-
-For example, you can access and modify text in current buffer like so:
+For example, you can access and modify text in current buffer :
 
 ```
 vim.current.buffer.append('I was added by a Python plugin!')
 ```
 
-As an example, let’s implement another command, `InsertCountry`, 
-which would insert the name of the country you are in at current cursor position. 
+Continuing from our example above, let’s implement another command, `InsertCountry`, 
+which inserts the name of the country your machine is in at current cursor position. 
 Here is the Python code to add:
 
 ```
@@ -331,7 +336,7 @@ def insert_country():
   vim.current.buffer[row-1] = new_line
 ```
 
-And, same way as before, let’s add the respective `VimL` function and command:
+And, just as before, let's add the corresponding `VimL` function and command:
 
 ```
 function! InsertCountry()
@@ -341,12 +346,12 @@ endfunction
 command! -nargs=0 InsertCountry call InsertCountry()
 ```
 
-Try it out in a new Vim instance. Position a cursor somewhere in a buffer and run `:InsertCountry`
+Try it out in a new Vim instance : Position a cursor somewhere in a buffer and run `:InsertCountry`
 
 
 ### Binding function calls to key combinations
 
-You can now even map a key combination for this. For example, run
+To map a key combination for this, run :
 
 ```
 :map <Leader>c :InsertCountry<CR>
@@ -355,12 +360,12 @@ You can now even map a key combination for this. For example, run
 and press `<Leader> c` to run the command 
 (check out [](https://stackoverflow.com/questions/1764263/what-is-the-leader-in-a-vimrc-file) to find out what `<Leader>` means).
 
-Hey, the plugin just got a major upgrade! 
+This is a significant upgrade to the functionality available :  
 Our users can add the mapping to `~/.vimrc` and their country name is just two key presses away!
 
 Vim plugins can do a lot more interesting things. 
 What is possible and how to use vim module is well documented in Vim itself. 
-Check out help: `:help python-vim` - this is why I mentioned curiosity as a prerequisite previously.
+Check out help: `:help python-vim`.  Note that this (like Vim itself) has quite a learning curve.
 
 
 ### Configuration
