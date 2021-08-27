@@ -279,7 +279,7 @@ Add this to the end of `yourpluginname.vim` file:
 
 ```
 function! PrintCountry()
-  python3 print_country()
+  python3 plugin.print_country()
 endfunction
 ```
 
